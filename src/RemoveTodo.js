@@ -1,15 +1,28 @@
-import React, {useState} from 'react'
+import React, {useState ,useContext} from 'react'
+import { useResource } from 'react-request-hook';
+import {StateContext} from './context'
 
-function handleRemove(id){
-    
-}
-export default function CreateTodo ({user, dispatch}) {
+export default function RemoveTodo () {
+  const {user}=useContext(StateContext)
+const {dispatch}=useContext(StateContext)
 const [id,setID]=useState('')
 const [ title, setTitle ] = useState('')
 const [ description, setDescription ] = useState('')
 const [ datecreated, setDateCreated ] = useState('')
 
 
+const [items , removeitem ] = useResource(({id}) => ({
+  url: '/items/' + id,
+  method: 'delete',
+  data: {id}
+}))
+
+function handleRemove () {
+ removeitem({ id })
+         
+ dispatch({ type: 'DELETE_TODO', id })
+ //dispatch({type:'Fetch_TodoItem',items:items.data })
+}
 
 function handleTitle (evt) { setTitle(evt.target.value) }
 
@@ -18,7 +31,7 @@ function handleID (evt) { setID(evt.target.value) }
 
     
 
- return (<form onSubmit={e => e.preventDefault(dispatch({ type: 'DELETE_TODO'},id,title))} >
+ return (<form onSubmit={e => e.preventDefault(handleRemove(id))} >
   
    
    <div><br></br></div>
@@ -34,4 +47,4 @@ function handleID (evt) { setID(evt.target.value) }
    
    
 
-   <div> <input type="submit" value="Remove" onClick={handleRemove(id)}/></div></form>)}
+   <div> <input type="submit" value="Remove" /></div></form>)}
