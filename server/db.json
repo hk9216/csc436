@@ -15,16 +15,6 @@
       "id": 1,
       "username": "hk",
       "password": "hkpassword"
-    },
-    {
-      "username": "Haider",
-      "password": "1234",
-      "id": 2
-    },
-    {
-      "username": "Haider1",
-      "password": "111",
-      "id": 3
     }
   ]
 }

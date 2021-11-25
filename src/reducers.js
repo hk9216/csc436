@@ -2,9 +2,15 @@ function userReducer (state, action) {
     switch (action.type) {
         case 'LOGIN':
         case 'REGISTER':
-            return action.username
+              return {
+             'username': action.username,
+             'access_token': action.access_token
+                            }
         case 'LOGOUT':
-            return ''
+              return {
+              'username': undefined,
+             'access_token': undefined
+             }
         default:
             return state;
     }
@@ -39,10 +45,12 @@ function userReducer (state, action) {
             if(state !=null)
              return state.filter((p,i) => i !== action.todoitem)
         case 'FETCH_TodoItem':
-            
             return action.itemsA
+            case 'FETCH_Users':
+            return action.usersA
         default:
            return state;
+           
     }
 }
     export default function appReducer (state, action) {
@@ -50,7 +58,9 @@ function userReducer (state, action) {
         return {
             user: userReducer(state.user, action),
             
-            itemsA: postsReducer(state.itemsA, action)
+            itemsA: postsReducer(state.itemsA, action),
+
+           usersA: postsReducer(state.usersA, action)
         }
   
     }
